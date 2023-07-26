@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: msvc-gateway-api-sprgbt
+
+server:
+  port: ${PORT:8080}
+
+  # Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://18.208.207.210/eureka
+  instance:
+    preferIpAddress: true
+    ip-address: 44.200.199.93
+    hostname: localhost

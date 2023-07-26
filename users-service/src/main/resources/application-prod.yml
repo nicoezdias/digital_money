@@ -1,0 +1,59 @@
+server:
+  port: ${PORT:8082}
+
+spring:
+  config:
+    import: env.properties
+  application:
+    name: msvc-users-api
+
+  # Conexion a DB MySQL
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_HOST_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  # JPA - Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  properties:
+    hibernate:
+      format_sql: false
+
+  # Lectura del archivo sql
+  sql:
+    init:
+      mode: always
+      data-locations-classpath: import.sql
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: help.digitalmoneywallet@gmail.com
+    password: dmqoxwpexdyteqju
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+  # Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://18.208.207.210/eureka
+  instance:
+    preferIpAddress: true
+    ip-address: 3.91.170.200
+    hostname: localhost

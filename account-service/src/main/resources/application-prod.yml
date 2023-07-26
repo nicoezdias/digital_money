@@ -1,0 +1,57 @@
+server:
+  port: ${PORT:8084}
+
+spring:
+  config:
+    import: env.properties
+  application:
+    name: msvc-account-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_HOST_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  # JPA - Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  properties:
+    hibernate:
+      format_sql: false
+
+#Springdoc
+spring-doc:
+  api-docs:
+    path : /users-openapi
+    swagger-ui:
+      path: /swagger-ui-custom.html
+      disable-swagger-default-url: true
+
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: User Service created for Social-Lisening
+    version: 2.0.0
+
+#Eureka
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://18.208.207.210/eureka
+  instance:
+    preferIpAddress: true
+    ip-address: 3.235.160.35
+    hostname: localhost

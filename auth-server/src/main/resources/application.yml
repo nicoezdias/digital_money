@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: dev
+  config:
+    import: optional:env.properties
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_HOST_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  # JPA - Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  properties:
+    hibernate:
+      format_sql: false
+
+  # Lectura del archivo sql
+  sql:
+    init:
+      mode: always
+      data-locations-classpath: import.sql

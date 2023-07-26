@@ -1,0 +1,4523 @@
+{
+	"info": {
+		"_postman_id": "8ca7a27a-5a07-4652-8f3d-1f99daa6bfd9",
+		"name": "EQ1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18046022",
+		"_collection_link": "https://interstellar-sunset-989828.postman.co/workspace/EQ1~84043697-4b5e-46cd-bbc0-11ab183d4da0/collection/18046022-8ca7a27a-5a07-4652-8f3d-1f99daa6bfd9?action=share&creator=18046022&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Sprint 1",
+			"item": [
+				{
+					"name": "Login user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Setear Tokens\", () => {",
+									"    const jsonData = pm.response.json();",
+									"   pm.globals.set(\"ACCESS_TOKEN\", jsonData.access_token);",
+									"   pm.globals.set(\"REFRESH_TOKEN\", jsonData.refresh_token);",
+									"   pm.globals.set(\"TOKEN_TYPE\", jsonData.token_type);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "user1@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "111",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/security/oauth/token",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by dni",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/users/dni?dni=123456789",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"dni"
+							],
+							"query": [
+								{
+									"key": "dni",
+									"value": "987654321",
+									"disabled": true
+								},
+								{
+									"key": "dni",
+									"value": "123456789"
+								},
+								{
+									"key": "dni",
+									"value": "123123",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/users/email?email=admin@mail.com",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "admin@mail.com"
+								},
+								{
+									"key": "email",
+									"value": "user1@mail.com",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "blabla@mail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ana\",\r\n    \"last_name\": \"Fidalgo\",\r\n    \"dni\": 30744221,\r\n    \"email\": \"analaurafidalgo@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"phone\": 47828304\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login  To Verify Mail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Setear Tokens\", () => {",
+									"    const jsonData = pm.response.json();",
+									"   pm.globals.set(\"ACCESS_TOKEN_MAIL\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "analaurafidalgo@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "111",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/security/oauth/token",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify email",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_MAIL}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"verificationCode\": 126963\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/verificate",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"verificate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend verification code Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_MAIL}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/resend",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"resend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/forgot-password?email=analaurafidalgo@gmail.com",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "analaurafidalgo@gmail.com"
+								},
+								{
+									"key": "email",
+									"value": "blabla@mail.com",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pass\": \"abc12345\",\n    \"passRep\": \"abc12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/reset-password/5297280",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								"reset-password",
+								"5297280"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login After Password Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Setear Tokens\", () => {",
+									"    const jsonData = pm.response.json();",
+									"   pm.collectionVariables.set(\"ACCESS_TOKEN\", jsonData.access_token);",
+									"   pm.collectionVariables.set(\"REFRESH_TOKEN\", jsonData.refresh_token);",
+									"   pm.collectionVariables.set(\"TOKEN_TYPE\", jsonData.token_type);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "$2a$12$BNJJmvJLOCL3lcsPHfc47eHuhPK77kiEZ4HMtiuSFgaxF/3ByeAbO",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "$2a$12$Du/D2SkKtqAG1F8YV9TxDuXOweFBWcowP2ZYe5i3ZP45ZofIwHg9C",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "analaurafidalgo@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "abc12345",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/security/oauth/token",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sprint 2",
+			"item": [
+				{
+					"name": "Login user 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Setear Tokens\", () => {",
+									"    const jsonData = pm.response.json();",
+									"   pm.globals.set(\"ACCESS_TOKEN_ACCOUNTS\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "user1@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/security/oauth/token",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get account info by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get las 5 transactions by account ID 200 OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/transactions",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get last 5 transactions by account ID 204 No Content",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_TRANSACTIONS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/transactions",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get las 5 transactions by account ID 401 Unauthorized",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/transactions",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get las 5 transactions by account ID 404 Not Found (Account ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/transactions",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get las 5 transactions by account ID 403 Forbidden",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/transactions",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"transactions"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Setear Tokens\", () => {",
+									"    const jsonData = pm.response.json();",
+									"   pm.globals.set(\"ACCESS_TOKEN_TRANSACTIONS\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{CLIENT_SECRET}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{CLIENT_ID}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "amaria@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "111",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URI}}/security/oauth/token",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/users/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user by ID Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"email\": \"admin@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch user by ID Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"dni\": \"123456789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/users/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch account (alias) by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"word_index_zero\": \"Jirafa\" ,\n    \"word_index_one\": \"Patineta\",\n    \"word_index_two\": \"Devaluacion\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch account (alias) by ID Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"word_index_zero\": \"\" ,\n    \"word_index_one\": \"Patineta\",\n    \"word_index_two\": \"Devaluacion\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch account (alias) by ID Copy 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"word_index_zero\": \"Patineta\" ,\n    \"word_index_one\": \"Patineta\",\n    \"word_index_two\": \"Devaluacion\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4916280081616925,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 409 Conflict (Card exists in another account)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 5412873403403000,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 404 Not Found (Account ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4916280081616925,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 401 Unauthorized",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4916280081616925,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 403 Forbidden",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4916280081616925,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 400 Bad Request (Expiration Date Format)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4916280081616925,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/01/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 400 Bad Request (Expiration Date Expired)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4539337010734513,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2021\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post card to account 400 Bad Request (Card Number Invalid)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"DH Money\",\n    \"cardNumber\": 4539337010734511,\n    \"cardHolder\": \"Juan Pedro Perez\",\n    \"expirationDate\": \"08/2023\",\n    \"cvv\": 827,\n    \"bank\": \"Digital Money Bank\",\n    \"cardType\": \"Debito\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cards by account ID 200 OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cards by account ID 204 No Content (User with NO cards)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_TRANSACTIONS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cards by account ID 401 Unauthorized",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cards by account ID 403 Forbidden",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cards by account ID 404 Not Found (Account ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get card by account ID and card ID 200 OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get card by account ID and card ID 401 Unauthorized",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get card by account ID and card ID 403 Forbidden",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "cardId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get card by account ID and card ID 404 Not Found (Account ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "99"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get card by account ID and card ID 404 Not Found (Card)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete card 200 OK",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete card 401 Unauthorized",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete card 404 Not Found (Card ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								},
+								{
+									"key": "cardId",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete card 404 Not Found (Account ID)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "99"
+								},
+								{
+									"key": "cardId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete card 403 Forbidden",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/accounts/:id/cards/:cardId",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"accounts",
+								":id",
+								"cards",
+								":cardId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "cardId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URI}}/security/tokens/revoke/{{ACCESS_TOKEN_ACCOUNTS}}",
+							"host": [
+								"{{URI}}"
+							],
+							"path": [
+								"security",
+								"tokens",
+								"revoke",
+								"{{ACCESS_TOKEN_ACCOUNTS}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sprint 3",
+			"item": [
+				{
+					"name": "#00 Login",
+					"item": [
+						{
+							"name": "Login user 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Setear Tokens\", () => {",
+											"    const jsonData = pm.response.json();",
+											"   pm.globals.set(\"ACCESS_TOKEN\", jsonData.access_token);",
+											"   pm.globals.set(\"REFRESH_TOKEN\", jsonData.refresh_token);",
+											"   pm.globals.set(\"TOKEN_TYPE\", jsonData.token_type);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{CLIENT_SECRET}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{CLIENT_ID}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "admin@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456789",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "111",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URI}}/security/oauth/token",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"security",
+										"oauth",
+										"token"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login user 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Setear Tokens\", () => {",
+											"    const jsonData = pm.response.json();",
+											"   pm.globals.set(\"ACCESS_TOKEN_TRANSACTIONS\", jsonData.access_token);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "{{CLIENT_SECRET}}",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "{{CLIENT_ID}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "amaria@mail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456789",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "111",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URI}}/security/oauth/token",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"security",
+										"oauth",
+										"token"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "#18 (Como usuario necesito ver toda la actividad realizada con mi billetera desde la más reciente a la más antigua para tener control de mis transacciones)",
+					"item": [
+						{
+							"name": "Otros",
+							"item": [
+								{
+									"name": "Get all account  activity 401 Unauthorized",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity 400 Bad Request (Missing Account ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity 404 Not Found (Account ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "99"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get all account activity 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity 204 No Content",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_TRANSACTIONS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity 403 Forbidden",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "#19 (Como usuario necesito el detalle de una actividad/transacción de la billetera en específico)",
+					"item": [
+						{
+							"name": "Otros",
+							"item": [
+								{
+									"name": "Get a transaction by ID 404 Not Found (ID cuenta inexistente)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												":tranferenceID"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "99"
+												},
+												{
+													"key": "tranferenceID",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get a transaction by ID 404 Not Found (ID transferencia inexistente)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												":tranferenceID"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												},
+												{
+													"key": "tranferenceID",
+													"value": "99"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get a transaction by ID 400 Bad Request (Missing account ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												":tranferenceID"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												},
+												{
+													"key": "tranferenceID",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get a transaction by ID 400 Bad Request (Missing transfer ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												":tranferenceID"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												},
+												{
+													"key": "tranferenceID",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get a transaction by ID 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										":tranferenceID"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										},
+										{
+											"key": "tranferenceID",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a transaction by ID 401 Unauthorized",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										":tranferenceID"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										},
+										{
+											"key": "tranferenceID",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a transaction by ID 403 Forbidden",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/:tranferenceID",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										":tranferenceID"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										},
+										{
+											"key": "tranferenceID",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "#20 (Como usuario me gustaría ingresar dinero desde mi tarjeta de débito o crédito a mi billetera Digital Money House)",
+					"item": [
+						{
+							"name": "Otros",
+							"item": [
+								{
+									"name": "POST transaction (deposit) 201 Created (Amount con mas de 2 decimales iguales a 0)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 222.000,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 400 Bad Request (Amount = 0)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 0,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 401 Unauthorized",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": -45,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 403 Forbidden (Account belongs to another user)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 403 Forbidden (Card belongs to another user)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 1\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 404 Not Found (Account doesn't exist)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "99"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 404 Not Found (Card doesn't exist)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 99\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 400 Bad Request (Amount con mas de 2 decimales)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 222.012,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 400 Bad Request (Missing account ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "POST transaction (deposit) 400 Bad Request (cardId con caracteres no numericos)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": #3\r\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/accounts/:id/transferences",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"accounts",
+												":id",
+												"transferences"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get account info by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST transaction (deposit) 201 Created",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 3\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/accounts/:id/transferences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"accounts",
+										":id",
+										"transferences"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get account info by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get las 5 transactions by account ID 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/transactions",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"transactions"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST transaction (deposit) 400 Bad Request (Card Expired)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": 100,\r\n    \"cardId\": 5\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/accounts/:id/transferences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"accounts",
+										":id",
+										"transferences"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST transaction (deposit) 400 Bad Request (Amount Negative)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"amount\": -10,\r\n    \"cardId\": 3\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/accounts/:id/transferences",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"accounts",
+										":id",
+										"transferences"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "#23 (Como usuario me gustaría filtrar mis actividades por monto aproximado)",
+					"item": [
+						{
+							"name": "Otros",
+							"item": [
+								{
+									"name": "Get all account activity (filter by amount range) 400 Bad Request (amountRange < 1)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												},
+												{
+													"key": "amountRange",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity (filter by amount range)  400 Bad Request (amountRange vacío)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												},
+												{
+													"key": "amountRange",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity (filter by amount range) 400 Bad Request (account ID vacío)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": ""
+												},
+												{
+													"key": "amountRange",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity (filter by amount range) 401 - Unauthorized",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												},
+												{
+													"key": "amountRange",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity (filter by amount range) 403 Forbidden",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												},
+												{
+													"key": "amountRange",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all account activity (filter by amount range) 404 Not Found (Account ID)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+											"host": [
+												"{{URI}}"
+											],
+											"path": [
+												"accounts",
+												":id",
+												"activity",
+												"amount",
+												":amountRange"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "99"
+												},
+												{
+													"key": "amountRange",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get all account activity (filter by amount range) 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"amount",
+										":amountRange"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										},
+										{
+											"key": "amountRange",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity (filter by amount range)  204 No Content",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"amount",
+										":amountRange"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										},
+										{
+											"key": "amountRange",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity (filter by amount range)  400 Bad Request (amountRange > 5)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/amount/:amountRange",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"amount",
+										":amountRange"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										},
+										{
+											"key": "amountRange",
+											"value": "6"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJ1c2VyX25hbWUiOiJ1c2VyMUBtYWlsLmNvbSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJuYW1lIjoidXNlcjEiLCJleHAiOjE2ODY4ODUzMTUsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiI0NDRkYjFhNi1hZTY1LTRmZGItYmRlYi0zMWFiMjk2MWM4NDYiLCJkbmkiOjk4NzY1NDMyMSwiZW1haWwiOiJ1c2VyMUBtYWlsLmNvbSIsImNsaWVudF9pZCI6IiQyYSQxMiREdS9EMlNrS3RxQUcxRjhZVjlUeER1WE93ZUZCV2Nvd1AyWlllNWkzWlA0NVpvZkl3SGc5QyJ9.qNKsSXGl_ag6vsNKHsCtpWVOLCvdlBDtRQe821g1RZ8",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "#24 (Como usuario me gustaría filtrar mis actividades con otras opciones: monto aproximado, periodo, tipo de transaccion)",
+					"item": [
+						{
+							"name": "Get all account activity (dynamic filter) 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/filters",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"filters"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2022-02-18",
+											"disabled": true
+										},
+										{
+											"key": "endDate",
+											"value": "2023-05-20",
+											"disabled": true
+										},
+										{
+											"key": "amountRange",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Deprecated",
+					"item": [
+						{
+							"name": "Get all account activity Filter Dates 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/dates?start_date=2023-05-12&end_date=2023-05-13",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"dates"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2023-05-12"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-13"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Dates 204 No Content",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/dates?start_date=2023-05-13&end_date=2023-05-14",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"dates"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2023-05-13"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-14"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Dates 400 Bad Request (end_date anterior a start_date)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/dates?start_date=2023-05-13&end_date=2023-05-12",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"dates"
+									],
+									"query": [
+										{
+											"key": "start_date",
+											"value": "2023-05-13"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-12"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=INCOMING",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING"
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 204 No Content",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_TRANSACTIONS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=INCOMING",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING"
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 400 Bad Request (transaction_type)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=DEPOSIT",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 404 Not Found (Account ID)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=INCOMING",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING"
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "99"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 401 Unauthorized",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=INCOMING",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING"
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "99"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all account activity Filter Type 403 Forbidden",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{ACCESS_TOKEN_ACCOUNTS}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URI}}/accounts/:id/activity/type?transaction_type=INCOMING",
+									"host": [
+										"{{URI}}"
+									],
+									"path": [
+										"accounts",
+										":id",
+										"activity",
+										"type"
+									],
+									"query": [
+										{
+											"key": "transaction_type",
+											"value": "INCOMING"
+										},
+										{
+											"key": "transaction_type",
+											"value": "OUTGOING",
+											"disabled": true
+										},
+										{
+											"key": "transaction_type",
+											"value": "DEPOSIT",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sprint 4",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "TOKEN_TYPE",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "CLIENT_ID",
+			"value": "$2a$12$Du/D2SkKtqAG1F8YV9TxDuXOweFBWcowP2ZYe5i3ZP45ZofIwHg9C",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "CLIENT_SECRET",
+			"value": "$2a$12$BNJJmvJLOCL3lcsPHfc47eHuhPK77kiEZ4HMtiuSFgaxF/3ByeAbO",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "ACCESS_TOKEN_MAIL",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "ACCESS_TOKEN_ACCOUNTS",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "TOKEN_TYPE",
+			"value": ""
+		}
+	]
+}

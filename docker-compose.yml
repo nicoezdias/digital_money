@@ -1,0 +1,93 @@
+version: "3.9"
+networks:
+  local-digitalmoney:
+services:
+# /* --------------------------------DATABASES---------------------------------- */
+  mysqldb:
+    image: mysql:latest
+    container_name: "mysqldb"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=!-0con%n0RP6#
+      - MYSQL_DATABASE=digitalmoney
+    ports:
+      - "3307:3306"
+    networks:
+      - local-digitalmoney
+
+# /* --------------------------------EUREKA------------------------------------- */
+  eureka-server:
+    image: eureka-server
+    container_name: "eureka-server"
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - local-digitalmoney
+
+# /* --------------------------------GATEWAY------------------------------------ */
+  gateway-api:
+    image: gateway-api
+    container_name: "gateway-api"
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - PORT=8080
+    depends_on:
+      - eureka-server
+    restart: always
+    networks:
+      - local-digitalmoney
+
+# /* --------------------------------MICROSERVICES------------------------------ */
+  auth-server:
+    image: auth-server
+    container_name: "auth-server"
+    ports:
+      - "8090:8090"
+    environment:
+      - PORT=8090
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=!-0con%n0RP6#
+      - MYSQL_HOST_URL=jdbc:mysql://mysqldb:3306/digitalmoney
+    depends_on:
+      - eureka-server
+    restart: always
+    networks:
+      - local-digitalmoney
+
+  user-service:
+    image: users-service
+    container_name: "user-service"
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT_MS=8082
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=!-0con%n0RP6#
+      - MYSQL_HOST_URL=jdbc:mysql://mysqldb:3306/digitalmoney
+    depends_on:
+      - eureka-server
+    restart: always
+    networks:
+      - local-digitalmoney
+
+  account-service:
+    image: account-service
+    container_name: "account-service"
+    ports:
+      - "8084:8084"
+    environment:
+      - PORT=8084
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=!-0con%n0RP6#
+      - MYSQL_HOST_URL=jdbc:mysql://mysqldb:3306/digitalmoney
+    depends_on:
+      - eureka-server
+    restart: always
+    networks:
+      - local-digitalmoney

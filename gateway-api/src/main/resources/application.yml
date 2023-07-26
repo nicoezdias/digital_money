@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: userRoute
+          uri: lb://msvc-users-api
+          predicates:
+            - Path=/users/**
+        - id: accountRoute
+          uri: lb://msvc-account-api
+          predicates:
+            - Path=/accounts/**
+            #- Path=/transactions/**
+        - id: oauthRoute
+          uri: lb://msvc-oauth-server
+          predicates:
+            - Path=/security/**
+          filters:
+            - StripPrefix=1

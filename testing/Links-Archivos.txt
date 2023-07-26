@@ -1,0 +1,16 @@
+
+
+Testing Kickoff (Plan Pruebas): 
+https://docs.google.com/document/d/15Xrv5HS_f3Xs6iOjf0oMNX8HnXwRvAsQEl5WBRTvMLM/edit?usp=sharing
+
+Casos Prueba: 
+https://docs.google.com/spreadsheets/d/1kmIeGIh_IPLyq3jWluJZSiEODrYbDWubS73QePbSO3Q/edit?usp=sharing
+
+Testing Exploratorio: 
+https://docs.google.com/spreadsheets/d/1AkpN6rtgpJZSMWjQeb23wbbCTLlmNYJ2NlAMTv9lD_A/edit?usp=sharing
+
+Reporte Defectos: 
+https://docs.google.com/spreadsheets/d/1DJy0ZeScOy-pOA58itMwGnd9VQIj5H3lyV7cM15ZpGQ/edit?usp=sharing
+
+Reporte Testing:
+https://docs.google.com/spreadsheets/d/1HOt1BrVWLWsM00EWdXlSdVkIeBGn8IuvENwKZd1sXEk/edit?usp=sharing
